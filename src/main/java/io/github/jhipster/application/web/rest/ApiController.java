@@ -21,10 +21,9 @@ public class ApiController {
 		/*
 		 * Acces à la blockChain 
 		 */
-		String digest = "coucou";
+		String digest = "coucou "+Transaction;
 		d.setDigest(digest);
 		HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.add(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + digest);
 		return new ResponseEntity<>(d, httpHeaders, HttpStatus.OK);
 	}
 	
