@@ -1,5 +1,7 @@
 package io.github.jhipster.application.web.rest;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,19 +11,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.github.jhipster.application.security.AuthoritiesConstants;
 import io.github.jhipster.application.security.jwt.JWTConfigurer;
 
 @RestController
 @RequestMapping("/api")
+@RolesAllowed(AuthoritiesConstants.ANONYMOUS)
 public class ApiController {
 	
+	@RolesAllowed(AuthoritiesConstants.ANONYMOUS)
 	@GetMapping("getDigest")
 	public ResponseEntity<Digest> getDigest(int Transaction){
 		Digest d = new Digest("");
+		
 		/*
 		 * Acces à la blockChain 
 		 */
-		String digest = "coucou "+Transaction;
+		String digest = "digestcoucou "+Transaction;
 		d.setDigest(digest);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		return new ResponseEntity<>(d, httpHeaders, HttpStatus.OK);
