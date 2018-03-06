@@ -35,7 +35,7 @@ public class ApiController {
 		try {
 		//String url = "http://89.86.39.88:1880/UGA/get?transaction="+id;";
 		
-		String url = "http://192.168.1.9:1880/UGA/get?transaction="+Transaction;
+		String url = "http://192.168.43.206:1880/UGA/get?transaction="+Transaction;
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		
