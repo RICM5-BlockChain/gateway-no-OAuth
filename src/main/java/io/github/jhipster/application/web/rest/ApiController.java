@@ -34,8 +34,8 @@ public class ApiController {
 		
 		try {
 		//String url = "http://89.86.39.88:1880/UGA/get?transaction="+id;";
-		
-		String url = "http://localhost:3000/api/Certif/"+Transaction;
+		String url = "http://192.168.1.9:1880/UGA/get?transaction="+Transaction;
+		//String url = "http://localhost:3000/api/Certif/"+Transaction;
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		
@@ -65,11 +65,12 @@ public class ApiController {
 		System.out.println(response.toString());
 		JSONObject rep = new JSONObject(response.toString());
 		String digest = rep.getString("digest");
+		System.out.println("digest:\""+digest+"\"");
 		d.setDigest(digest);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		return new ResponseEntity<>(d, httpHeaders, HttpStatus.OK);
 		
-		
+	
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -79,6 +80,7 @@ public class ApiController {
 		
 		
 	}
+	
 	
 	static class Digest{
 		private String digest; 
