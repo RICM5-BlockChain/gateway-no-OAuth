@@ -6,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.annotation.security.RolesAllowed;
-
+import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class ApiController {
 		try {
 		//String url = "http://89.86.39.88:1880/UGA/get?transaction="+id;";
 		
-		String url = "http://192.168.43.206:1880/UGA/get?transaction="+Transaction;
+		String url = "http://localhost:3000/api/Certif/"+Transaction;
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		
@@ -63,7 +63,8 @@ public class ApiController {
 
 		//print result
 		System.out.println(response.toString());
-		String digest = response.toString();
+		JSONObject rep = new JSONObject(response.toString());
+		String digest = rep.getString("digest");
 		d.setDigest(digest);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		return new ResponseEntity<>(d, httpHeaders, HttpStatus.OK);
