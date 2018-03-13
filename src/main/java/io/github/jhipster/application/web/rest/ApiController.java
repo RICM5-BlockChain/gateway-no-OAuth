@@ -30,50 +30,51 @@ public class ApiController {
 		
 		/*
 		 * Acces à la blockChain 
-		 */
+		*/
 		
 		try {
-		//String url = "http://89.86.39.88:1880/UGA/get?transaction="+id;";
-		String url = "http://192.168.1.9:1880/UGA/get?transaction="+Transaction;
-		//String url = "http://localhost:3000/api/Certif/"+Transaction;
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			//String url = "http://89.86.39.88:1880/UGA/get?transaction="+id;";
+			// String url = "http://192.168.1.9:1880/UGA/get?transaction="+Transaction;
+			String url = "http://127.0.0.1:3000/api/Certif/"+Transaction;
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			
+			// optional default is GET
+			con.setRequestMethod("GET");
+
+			//add request header
+			con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+					
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+
+			BufferedReader in = new BufferedReader(
+			new InputStreamReader(con.getInputStream()));
+			
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+
+			//print result
+			System.out.println(response.toString());
+			JSONObject rep = new JSONObject(response.toString());
+			String digest = rep.getString("digest");
+			System.out.println("digest:\""+digest+"\"");
+			d.setDigest(digest);
+			HttpHeaders httpHeaders = new HttpHeaders();
+			return new ResponseEntity<>(d, httpHeaders, HttpStatus.OK);
+			
 		
-		// optional default is GET
-		con.setRequestMethod("GET");
-
-		//add request header
-		con.setRequestProperty("User-Agent", "Mozilla/5.0");
-
-				
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-		new InputStreamReader(con.getInputStream()));
-		
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		//print result
-		System.out.println(response.toString());
-		JSONObject rep = new JSONObject(response.toString());
-		String digest = rep.getString("digest");
-		System.out.println("digest:\""+digest+"\"");
-		d.setDigest(digest);
-		HttpHeaders httpHeaders = new HttpHeaders();
-		return new ResponseEntity<>(d, httpHeaders, HttpStatus.OK);
-		
-	
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			System.out.println("TAMERE");
 			HttpHeaders httpHeaders = new HttpHeaders();
 			return new ResponseEntity<>(d, httpHeaders, HttpStatus.NOT_FOUND);
 		}
